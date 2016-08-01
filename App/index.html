@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <style type="text/css">
+    .mapConatainer {
+        position: absolute;
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    .cesium-viewer-infoBoxContainer {
+        display: none
+    }
+    .cesium-viewer-bottom {
+        display: none
+    }
+    .cesium-widget,
+    .cesium-widget canvas {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body class="main-body">
+    <div class="mapConatainer">
+        <div id="mapId" style="margin: 0px; top: 0px; height: 100%;position: initial;"></div>
+        <div id="toolbar" class="btn-group" style="position: absolute; top: 30px; left: 35px;
+    z-index: 99;"></div>
+    </div>
+    <script src="script/require.js"></script>
+    <script type="text/javascript" src="script/jquery.js"></script>
+
+    <script type="text/javascript">
+    require(['../source/index'], function() {
+    	
+
+    })
+    </script>
+</body>
