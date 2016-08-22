@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     del = require('del');
 
 gulp.task('clean', function(cb) {
-    del(['./dist/NPMap3D.min.js', './dist/*.css'], cb);
+    del(['./dist/NPMap3D.min.js', './dist/*.css', './dist/*'], cb);
 });
 
 gulp.task('minifyjs', function() {
@@ -23,6 +23,12 @@ gulp.task('minifyjs', function() {
         .pipe(uglify())
         .pipe(gulp.dest('./dist/'));
 });
+
+gulp.task('Workers', function() {
+    return gulp.src(['Source/lib/Workers/*.js'
+        ])         
+        .pipe(uglify()).pipe(gulp.dest('./dist/Workers/'));       
+})
 
 gulp.task('minifycss', function() {
     return gulp.src(['Source/lib/Widgets/shared.css',
@@ -48,16 +54,16 @@ gulp.task('minifycss', function() {
 });
 
 gulp.task('copy', function() {
-    var start = 'Source/lib/Assets/*/*/*';
-    gulp.src(start).pipe(gulp.dest('./dist/Assets'));     
-    var start = 'Source/lib/Workers/*/*/*';
-    return gulp.src(start).pipe(gulp.dest('./dist/Workers'));
-
+    var start = 'Source/lib/Assets/**/*/*';
+    gulp.src(start).pipe(gulp.dest('./dist/Assets'));
+    // var start = 'Source/lib/Workers/**';
+    // return gulp.src(start).pipe(gulp.dest('./dist/Workers'));
 });
 
 
-gulp.task('default', ['clean', 'minifycss', 'minifyjs'], function() {
+gulp.task('default', ['clean', 'minifycss', 'minifyjs', 'copy','Workers'], function() {
     // console.log('start')
     //gulp.start('minifyjs');
+    console.log('结束');
 
 });

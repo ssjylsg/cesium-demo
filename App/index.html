@@ -34,9 +34,34 @@
     <script type="text/javascript" src="script/jquery.js"></script>
 
     <script type="text/javascript">
-    require(['../source/index'], function() {
-    	
+    require(['index'], function() {
+        setTimeout(function() {
+            var q = helper.getQueryString('d');
+            switch (q) {
+                case 'c':
+                    helper.loadData();
+                    break;
+                case 'p':
+                    helper.loadPopulation();
+                    break;
+                case 'd':
+                    helper.addAnimationLine();
+                    break;
+                case 'v':
+                    helper.addVideo();
+                    break;
+                case 's':
+                    helper.loadDataCylinder();
+                    break;
+                case 'h':
+                    helper.createHeatMap();                    
+                    break;
+                default:
+                    break;
 
+            }
+
+        }, 3000);
     })
     </script>
 </body>
