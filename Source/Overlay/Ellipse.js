@@ -2,6 +2,7 @@
     NPMap3D.Overlay.Ellipse = function(options) {
         var type = 'ellipse',
             a = ['height', 'extrudedHeight', 'rotation', 'semiMinorAxis', 'semiMinorAxis', 'show', 'fill', 'outline', 'outlineWidth', 'numberOfVerticalLines', 'stRotation'];
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.position = Cesium.Cartesian3.fromDegrees(options.position.x, options.position.y, options.position.z),
             this._entity[type] = {

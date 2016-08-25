@@ -1,7 +1,8 @@
 (function() {
     NPMap3D.Overlay.Polygon = function(options) {
-        var a = ['height', 'show', 'fill', 'outline', 'outlineWidth', 'stRotation', 'perPositionHeight', 'closeTop', 'closeBottom'],
+        var a = ['height', 'show','extrudedHeight', 'fill', 'outline', 'outlineWidth', 'stRotation', 'perPositionHeight', 'closeTop', 'closeBottom'],
             type = 'polygon';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.polygon = {
                 hierarchy: Cesium.Cartesian3.fromNPCartesian3List(options.position),

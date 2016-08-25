@@ -15,6 +15,7 @@
         });
         this._ = null;
         options.position = NPMap3D.toRadians(options.position);
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         this.options = options;
         //this._ = new Cesium.Billboard(options);
         // for (var k in options) {

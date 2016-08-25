@@ -2,6 +2,7 @@
     NPMap3D.Overlay.Rectangle = function(options) {
         var a = ['height', 'closeTop', 'extrudedHeight', 'closeBottom', 'show', 'fill', 'outline', 'outlineWidth', 'rotation', 'stRotation'],
             type = 'rectangle';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.rectangle = {
                 coordinates: Cesium.Rectangle.fromDegreesArray(options.position),

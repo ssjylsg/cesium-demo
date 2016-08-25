@@ -45,6 +45,27 @@
                 })(l, this);
                 continue;
             }
+            if (l === "position") {
+                (function(index, self) {
+                    Object.defineProperty(self, index, {
+                        get: function() {
+                            var e = this._entity[index];
+                            if (e) {
+                                e = e.getValue();
+                                var l = Cesium.Cartographic.fromCartesian(e);
+                                return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
+                            }
+                        },
+                        set: function(value) {
+                            if (NPMap3D.Util.defined(value)) {
+                                value = NPMap3D.Util.T.setPoint(value);
+                                this._entity[index] = Cesium.Cartesian3.fromDegrees(value.x, value.y, value.z);
+                            }
+                        }
+                    });
+                })(l, this);
+                continue;
+            }
             (function(index, self) {
                 if (!self.hasOwnProperty(index)) {
                     Object.defineProperty(self, index, {
@@ -108,19 +129,15 @@
                             case "rectangle":
                                 e = this._entity[type].coordinates.getValue();
                                 var l = Cesium.Rectangle.center(e);
-                                return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
+                                return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
                                 break;
                         }
 
                         if (e) {
                             var l = Cesium.Cartographic.fromCartesian(e);
-                            return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
+                            return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
                         }
-                    }
-                    // ,
-                    // set: function(value) {
-                    //     this._entity.position = Cesium.Cartesian3.fromDegrees(value.lon, value.lat, value.height);
-                    // }
+                    }                   
             }
         });
 
@@ -136,7 +153,8 @@
         this.label = {},
             this._entity.label = new Cesium.LabelGraphics({
                 text: options.text,
-                verticalOrigin: Cesium.VerticalOrigin.TOP
+                verticalOrigin: Cesium.VerticalOrigin.TOP,
+                font: '24px Helvetica'
             }),
             labelType = 'label';
         var a = ['text', 'font', 'outlineWidth', 'scale', 'show', 'horizontalOrigin', 'verticalOrigin'];
@@ -151,7 +169,7 @@
                     }
                 },
                 set: function(e) {
-                    that._entity[labelType]['fillColor'] = e._;
+                    that._entity[labelType]['fillColor'] = e._e;
                 }
             },
             "outlineColor": {
@@ -160,14 +178,14 @@
                     return new NPMap3D.Color(e.red, e.green, e.blue, e.alpha);
                 },
                 set: function(e) {
-                    that._entity[labelType]['outlineColor'] = e._;
+                    that._entity[labelType]['outlineColor'] = e._e;
                 }
             },
             'labelPosition': {
                 set: function(p) {
                     if (p) {
                         if (NPMap3D.Util.isArray(p)) {
-                            that._entity.position = Cesium.Cartesian3.fromDegrees(p[0], p[1], p[2] || 20000);
+                            that._entity.position = Cesium.Cartesian3.fromDegrees(p[0], p[1], p[2] || 0);
                         } else {
                             that._entity.position = Cesium.Cartesian3.fromDegrees(p.x, p.y, p.z);
                         }

@@ -65,7 +65,7 @@
              '高德影像': new NPMap3D.Layer.GaodeMap({
                  isImageLayer: true
              }),
-             // '百度': new NPMap3D.Layer.BaiduMap(),
+             '百度': new NPMap3D.Layer.BaiduMap(),
              // '腾讯':new NPMap3D.Layer.QQMap()
          },
          czml: {

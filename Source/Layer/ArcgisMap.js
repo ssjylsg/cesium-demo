@@ -5,7 +5,7 @@
             isOnLine: true,
             url: '',
         });
-
+        this.Projection = options.projection || 'EPSG:4326';
         this.getLayer = function() {
             var googleyx = new Cesium.ArcGisMapServerImageryProvider({
                 url: options.url

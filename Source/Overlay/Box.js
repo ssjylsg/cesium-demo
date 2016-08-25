@@ -2,6 +2,7 @@
     NPMap3D.Overlay.Box = function(options) {
         var a = ['show', 'fill', 'outline', 'outlineWidth'],
             type = 'box';
+            options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.position = Cesium.Cartesian3.fromDegrees(options.position.x, options.position.y, options.position.z),
             this._entity.box = {

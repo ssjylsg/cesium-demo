@@ -1,9 +1,10 @@
 (function() {
     var _ = NPMap3D.Overlay.Marker = function(options) {
-        var a = ['scale', 'rotation', 'image',
+        var a = ['scale', 'rotation', 'image', 'position',
                 'show', 'horizontalOrigin', 'verticalOrigin', 'width', 'height'
             ],
             type = 'billboard';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.position = Cesium.Cartesian3.fromDegrees(options.position.x, options.position.y),
             this._entity.billboard = {

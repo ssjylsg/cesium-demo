@@ -623,7 +623,7 @@ var DrawHelper = (function() {
 
         return _;
     })();
-    var host = NPMap3D.Util.getHost()
+    var host = NPMap3D.Util.getHost() + '/Assets';
     var defaultBillboard = {
         iconUrl: host + "/img/dragIcon.png",
         shiftX: 0,
@@ -1709,7 +1709,7 @@ var DrawHelper = (function() {
             if (!(Cesium.defined(options.container))) {
                 throw new Cesium.DeveloperError('Container is required');
             }
-            var host = NPMap3D.Util.getHost()
+            var host = NPMap3D.Util.getHost() + '/Assets/';
             var drawOptions = {
                 markerIcon: host + "img/glyphicons_242_google_maps.png",
                 polylineIcon: host + "img/glyphicons_097_vector_path_line.png",
@@ -1947,7 +1947,7 @@ var DrawHelper = (function() {
         var toolbar = drawHelper.addToolbar(document.getElementById("toolbar"), {
             buttons: ['marker', 'polyline', 'polygon', 'circle', 'extent']
         });
-        var host = NPMap3D.Util.getHost()
+        var host = NPMap3D.Util.getHost() + '/Assets';
         toolbar.addListener('markerCreated', function(event) {
             loggingMessage('Marker created at ', 'Marker', event.position);
             // create one common billboard collection for all billboards
@@ -2036,18 +2036,18 @@ var DrawHelper = (function() {
 
         var logging = document.getElementById('logging');
 
-        function convertPosition(options) {
-            if (options.constructor.name == 'Array') {
-                var p = [];
-                for (var i = 0; i < options.length; i++) {
-                    p.push(convertPosition(options[i]));
-                }
-                return p;
-            } else {
-                var l = Cesium.Cartographic.fromCartesian(options);
-                return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
-            }
-        }
+        // function convertPosition(options) {
+        //     if (options.constructor.name == 'Array') {
+        //         var p = [];
+        //         for (var i = 0; i < options.length; i++) {
+        //             p.push(convertPosition(options[i]));
+        //         }
+        //         return p;
+        //     } else {
+        //         var l = Cesium.Cartographic.fromCartesian(options);
+        //         return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
+        //     }
+        // }
 
         function loggingMessage(message, type, options) {
             // return;
@@ -2056,7 +2056,7 @@ var DrawHelper = (function() {
                 case "Marker":
                     p = new NPMap3D.Overlay.Marker({
                         position: convertPosition(options),
-                        image: NPMap3D.Util.getHost() +'img/RedPin1LargeB.png'
+                        image: NPMap3D.Util.getHost() + '/Assets/' + 'img/RedPin1LargeB.png'
                     });
                     break;
                 case "Polyline":
@@ -2076,18 +2076,17 @@ var DrawHelper = (function() {
                         semiMajorAxis: options.radius
                     });
                     break;
-                case "Extent":
-                    //console.log(options);
+                case "Extent":         
                     p = new NPMap3D.Overlay.Rectangle({
-                        position: ([{
+                        position: ([NPMap3D.Util.T.getPoint({
                             x: Cesium.Math.toDegrees(options.west),
                             y: Cesium.Math.toDegrees(options.south),
                             z: options.height
-                        }, {
+                        }), NPMap3D.Util.T.getPoint({
                             x: Cesium.Math.toDegrees(options.east),
                             y: Cesium.Math.toDegrees(options.north),
                             z: options.height
-                        }])
+                        })])
                     });
             }
             if (p) {
@@ -2106,7 +2105,7 @@ var DrawHelper = (function() {
             return p;
         } else {
             var l = Cesium.Cartographic.fromCartesian(options);
-            return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
+            return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
         }
     }
     _.prototype.measureDistance = function(option) {
@@ -2155,7 +2154,7 @@ var DrawHelper = (function() {
                 });
                 that.map.viewer.entities.add(entity);
 
-                var host = NPMap3D.Util.getHost()
+                var host = NPMap3D.Util.getHost() + '/Assets';
 
                 var horizontalOrigin = points[0].x < lastPosition.x ? 1 : -1
                 var verticalOrigin = points[0].y < lastPosition.y ? 1 : -1

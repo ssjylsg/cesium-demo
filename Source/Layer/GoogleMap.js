@@ -1,5 +1,6 @@
 (function() {
     NPMap3D.Layer.GoogleMap = function(options) {
+        this.Projection = 'EPSG:900913';
         var options = NPMap3D.extend(options || {}, {
             isImageLayer: false,
             isOnLine: true,

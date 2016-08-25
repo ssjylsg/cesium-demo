@@ -13,6 +13,7 @@
         this._ = null;
         options.color = options.color._e || options.color;
         options.position = NPMap3D.toRadians(options.position);
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         this.options = options;
     }
 })();

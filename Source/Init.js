@@ -13,24 +13,25 @@ Array.prototype.remove = function(val) {
     }
 };
 
-var Class = {
-    create: function() {
-        return function() {
-            this.initialize.apply(this, arguments);
-        }
-    }
-};
-if (!Object.create) {
-    Object.create = function(o) {
-        function F() {}
-        F.prototype = o;
-        return new F();
-    };
-}
+// var Class = {
+//     create: function() {
+//         return function() {
+//             this.initialize.apply(this, arguments);
+//         }
+//     }
+// };
+// if (!Object.create) {
+//     Object.create = function(o) {
+//         function F() {}
+//         F.prototype = o;
+//         return new F();
+//     };
+// }
 
 (function() {
     var e = typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {};
     e.NPMap3D = e.NPMap3D || {
+        ISPOINTCONVERT: true,
         StripeOrientation: {
             HORIZONTAL: 0,
             VERTICAL: 1

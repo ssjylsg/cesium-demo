@@ -2,6 +2,7 @@
     NPMap3D.Overlay.Label = function(options) {
         var a = ['text', 'font', 'outlineWidth', 'scale', 'show', 'horizontalOrigin', 'verticalOrigin'],
             type = 'label';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.position = Cesium.Cartesian3.fromDegrees(options.position.x, options.position.y),
             this._entity.label = {

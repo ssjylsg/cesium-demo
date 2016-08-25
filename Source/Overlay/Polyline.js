@@ -2,6 +2,7 @@
     NPMap3D.Overlay.Polyline = function(options) {
         var a = ['width', 'followSurface', 'show'],
             type = 'polyline';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.polyline = {
                 positions: Cesium.Cartesian3.fromNPCartesian3List(options.position),

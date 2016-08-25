@@ -1,5 +1,6 @@
 (function() {
     NPMap3D.Layer.TiandiMap = function(options) {
+        this.Projection = 'EPSG:4326';
         var options = NPMap3D.extend(options || {}, {
             isImageLayer: false,
             isOnLine: true,

@@ -1,7 +1,8 @@
 (function() {
     NPMap3D.Overlay.Cylinder = function(options) {
-        var a = ['length', 'fill', 'outline', 'outlineWidth', 'slices', 'numberOfVerticalLines'],
+        var a = ['length','topRadius','bottomRadius', 'fill', 'outline', 'outlineWidth', 'slices', 'numberOfVerticalLines'],
             type = 'cylinder';
+        options.position = NPMap3D.Util.T.setPoint(options.position);
         NPMap3D.Overlay.call(this, options, a, type),
             this._entity.position = Cesium.Cartesian3.fromDegrees(options.position.x, options.position.y, options.position.z),
             this._entity.cylinder = {

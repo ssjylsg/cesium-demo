@@ -17,4 +17,9 @@
         return new NPMap3D.Color(result.red, result.green, result.blue, result.alpha);
     };
 
+    NPMap3D.Color.fromHsl = function(i,r,n,o,l){
+        var result = Cesium.Color.fromHsl(i,r,n,o,l);
+        return new NPMap3D.Color(result.red, result.green, result.blue, result.alpha);
+    }
+
 })();

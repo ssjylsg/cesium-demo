@@ -55,7 +55,7 @@ if (v === 'release' || v === 'r') {
         require(['Source/lib/viewerCesiumNavigationMixin.min'], function() {
             require(['Source/Init', 'Source/Util'], function() {
                 require(['Source/lib/ThirdParty/DrawHelper/DrawHelper', 'Source/Layer/QQMap', 'Source/Layer/TiandiMap', 'Source/Layer/ArcgisMap', 'Source/Layer/BingMap',
-                    'Source/Layer/BaiduMap', 'Source/Layer/GaodeMap', 'Source/Layer/OpenStreetMap', 'Source/Layer/GoogleMap', 'Source/Layer/TiandiMap', 'Source/NPMap3D',
+                    'Source/Layer/BaiduMap', 'Source/Layer/GaodeMap', 'Source/Layer/OpenStreetMap', 'Source/Layer/GoogleMap', 'Source/Layer/TiandiMap', 'Source/Layer/OverlayLayer','Source/NPMap3D',
                     'Source/Overlay', 'Source/Color', 'Source/Material', 'Source/Material/CheckerboardMaterialProperty', 'Source/Material/ColorMaterial',
                     'Source/Material/CompositeMaterialProperty', 'Source/Material/GridMaterialProperty', 'Source/Material/ImageMaterialProperty',
                     'Source/Material/PolylineGlowMaterialProperty', 'Source/Material/PolylineOutlineMaterialProperty',

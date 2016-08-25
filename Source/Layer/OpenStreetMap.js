@@ -1,5 +1,6 @@
 (function() {
     NPMap3D.Layer.OpenStreetMap = function(options) {
+        this.Projection = 'EPSG:900913_';
         var options = NPMap3D.extend(options || {}, {
             isImageLayer: false,
             isOnLine: true,

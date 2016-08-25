@@ -1,4 +1,5 @@
 (function() {
+    var _defaultlayer;
     var _ = NPMap3D.Map3D = function(options) {
         this.options = options || {};
         this.options = NPMap3D.extend(this.options, {
@@ -15,18 +16,26 @@
             navigationHelpButton: false,
             shadows: true,
             navigationInstructionsInitiallyVisible: false,
-            sceneMode: Cesium.SceneMode.SCENE3D
+            sceneMode: Cesium.SceneMode.SCENE3D,
+            showRenderLoopErrors: true //false
         });
         this.options.imageryProvider = new Cesium.UrlTemplateImageryProvider({
             url: 'http://{s}.google.cn/vt?pb=!1m4!1m3!1i{z}!2i{x}!3i{y}!2m3!1e0!2sm!3i285000000!3m9!2szh-CN!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0',
             credit: 'Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
         });
+        this.mapProjection = 'EPSG:900913';
+        this.getProjection = function() {
+            return this.mapProjection;
+        };
+
+        _defaultlayer = new Cesium.CustomDataSource('_默认图层');
         this._entities = [];
         this.container = options.container || 'map';
         this.viewer = new Cesium.Viewer(this.container, this.options);
         this.viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
         this.viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+        this.viewer.dataSources.add(_defaultlayer);
         // this.viewer.scene.camera.constrainedAxis = undefined; //Cartesian3.UNIT_Z;
         // this.viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
         // this.viewer.scene.screenSpaceCameraController.tiltEventTypes = [Cesium.CameraEventType.PINCH, Cesium.CameraEventType.RIGHT_DRAG];        
@@ -34,6 +43,11 @@
         var handler = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
         var scene = this.viewer.scene;
         var that = this;
+        NPMap3D.Util.T.map = {
+            getProjection: function() {
+                return that.mapProjection;
+            }
+        }
         NPMap3D.Util.enhanceWithListeners(this);
 
         function callPrimitiveCallback(name, position) {
@@ -63,6 +77,7 @@
                 },
                 name: name
             };
+            event.position = NPMap3D.Util.T.getPoint(event.position);
             that.executeListeners(event, null, that);
 
             for (var i = ls.length - 1; i >= 0; i--) {
@@ -146,14 +161,23 @@
     _.prototype.setMode = function(mode) {
         this.viewer.scene.mode = Number(mode) || 1;
     }
+    _.prototype.getWindowCoordinates = function(p) {
+        var cartographicPosition = Cesium.Cartesian3.fromDegrees(p.x, p.y);
+        var screenPosition = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this.viewer.scene, cartographicPosition);
+        return {
+            x: screenPosition.x,
+            y: screenPosition.y
+        };
+    }
     _.prototype.getCenter = function() {
         var l = Cesium.Cartographic.fromCartesian(this.viewer.scene.camera.position);
         return new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height);
     };
     _.prototype.removeAll = function() {
         // this.viewer.entities.suspendEvents();
-        this.viewer.scene.primitives.removeAll();
-        this.viewer.entities.removeAll();
+        // this.viewer.scene.primitives.removeAll();
+        // this.viewer.entities.removeAll();
+        _defaultlayer.entities.removeAll();
         // this.viewer.entities.resumeEvents();
         this._entities = {};
     };
@@ -171,28 +195,45 @@
     }
     _.prototype.addOverlay = function(e) {
         e.setMap(this);
-        this.viewer.entities.suspendEvents();
-        this.viewer.entities.add(e._entity);
-        this._entities[e._entity.id] = e;
-        this.viewer.entities.resumeEvents();
+        _defaultlayer.entities.add(e._entity);
+        // this.viewer.entities.suspendEvents();
+        // this.viewer.entities.add(e._entity);
+        // this._entities[e._entity.id] = e;
+        // this.viewer.entities.resumeEvents();
     };
     _.prototype.removeOverlay = function(e) {
-        this.viewer.entities.suspendEvents();
-        this.viewer.entities.remove(e._entity);
+        _defaultlayer.entities.suspendEvents();
+        _defaultlayer.entities.remove(e._entity);
         this._entities[e._entity.id] = null;
-        this.viewer.entities.resumeEvents();
+        _defaultlayer.entities.resumeEvents();
     };
-    _.prototype.loadCzmlData = function(czml) {
-        var dataSource = Cesium.CzmlDataSource.load(czml);
-        this.viewer.dataSources.add(dataSource);
+    _.prototype.loadCzmlData = function(czml, sucessFun, errorFun) {
+        var viewer = this.viewer;
+        Cesium.CzmlDataSource.load(czml).then(function(dataSource) {
+            viewer.dataSources.add(dataSource);
+            if (sucessFun) {
+                sucessFun(dataSource);
+            }
+        }).otherwise(function(e) {
+            errorFun = errorFun || function(err) {
+                console.log(err)
+            };
+            errorFun(e);
+        });
     };
     _.prototype.addLayer = function(layer) {
-        var imageryLayers = this.viewer.scene.globe.imageryLayers;
-        imageryLayers.removeAll();
-        var layers = layer.getLayer();
-        for (var i = 0; i < layers.length; i++) {
-            imageryLayers.addImageryProvider(layers[i]);
+        if (layer instanceof(NPMap3D.Layer.OverlayLayer)) {
+            this.viewer.entities.add(layer.get());
+        } else {
+            var imageryLayers = this.viewer.scene.globe.imageryLayers;
+            imageryLayers.removeAll();
+            var layers = layer.getLayer();
+            for (var i = 0; i < layers.length; i++) {
+                imageryLayers.addImageryProvider(layers[i]);
+            }
+            this.mapProjection = layer.Projection;
         }
+
     };
     _.prototype.getExtent = function() {
         var extent = {},
