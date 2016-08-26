@@ -18,6 +18,9 @@
          }, {
              url: '/map3dassert/app/index.html?d=h',
              name: '热力图'
+         }, {
+             url: '/map3dassert/app/index.html?d=f',
+             name: '伴线运动'
          }],
          getQueryString: function(name) {
              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -758,6 +761,63 @@
                  y: ps[0].y,
                  z: 464598.80472653284
              });
+         },
+         crateTrajectory: function() {
+             var polyline = [
+                 [new NPMap3D.Cartesian3(108.93497975211476, 34.24270719817938, 300),
+                     new NPMap3D.Cartesian3(108.93516608065623, 34.24270758354259, 300),
+                     new NPMap3D.Cartesian3(108.93584875486133, 34.24271198399154, 300),
+                     new NPMap3D.Cartesian3(108.93607065638382, 34.24271410274987, 300),
+                     new NPMap3D.Cartesian3(108.93745985528139, 34.242721942980374, 300),
+                     new NPMap3D.Cartesian3(108.93759976723965, 34.24272281395232, 300),
+                     new NPMap3D.Cartesian3(108.93789255269307, 34.24271784287146, 300),
+                     new NPMap3D.Cartesian3(108.93839923306159, 34.242712211951535, 300),
+                     new NPMap3D.Cartesian3(108.9394271160909, 34.24269088663736, 300),
+                     new NPMap3D.Cartesian3(108.93968357405139, 34.24276427254095, 300),
+                     new NPMap3D.Cartesian3(108.93994920869126, 34.24276016798567, 300),
+                     new NPMap3D.Cartesian3(108.94053331425961, 34.242748241968506, 300),
+                     new NPMap3D.Cartesian3(108.9405361060052, 34.24274962615361, 300),
+                     new NPMap3D.Cartesian3(108.94070730625353, 34.24274680214072, 300),
+                     new NPMap3D.Cartesian3(108.94081808197924, 34.242747141066296, 300),
+                     new NPMap3D.Cartesian3(108.94118500373574, 34.2427489383016, 300),
+                     new NPMap3D.Cartesian3(108.94211255002521, 34.24275463838312, 300),
+                     new NPMap3D.Cartesian3(108.94234405652021, 34.242756134014904, 300),
+                     new NPMap3D.Cartesian3(108.94234654135133, 34.24285081333843, 300),
+                     new NPMap3D.Cartesian3(108.94284952634065, 34.24285065042066, 300),
+                     new NPMap3D.Cartesian3(108.9432818150264, 34.24285062942233, 300),
+                     new NPMap3D.Cartesian3(108.94340753207644, 34.24285064770816, 300),
+                     new NPMap3D.Cartesian3(108.94402314650746, 34.24285079659468, 300),
+                     new NPMap3D.Cartesian3(108.9448700247924, 34.24285073645632, 300),
+                     new NPMap3D.Cartesian3(108.94534962561761, 34.24285418368149, 300),
+                     new NPMap3D.Cartesian3(108.94565666050552, 34.24285660364663, 300),
+                     new NPMap3D.Cartesian3(108.94633172418482, 34.24285962532787, 300),
+                     new NPMap3D.Cartesian3(108.9465519167343, 34.24293801988555, 300),
+                     new NPMap3D.Cartesian3(108.94855045903802, 34.242928717184995, 300),
+                     new NPMap3D.Cartesian3(108.94914789584799, 34.24292379469015, 300),
+                     new NPMap3D.Cartesian3(108.94917436227426, 34.24471250800584, 300),
+                     new NPMap3D.Cartesian3(108.9491768191811, 34.245140389858804, 300),
+                     new NPMap3D.Cartesian3(108.94919589068517, 34.24594199234075, 300),
+                     new NPMap3D.Cartesian3(108.94920439965715, 34.24671167971242, 300),
+                     new NPMap3D.Cartesian3(108.94920984184125, 34.24719898134311, 300),
+                     new NPMap3D.Cartesian3(108.9492181812456, 34.247603248125884, 300),
+                     new NPMap3D.Cartesian3(108.94927459491485, 34.247602843398724, 300),
+                     new NPMap3D.Cartesian3(108.9492944972803, 34.247992380028585, 300),
+                     new NPMap3D.Cartesian3(108.94930969311712, 34.24865181328034, 300),
+                     new NPMap3D.Cartesian3(108.94930938957947, 34.24870734262104, 300),
+                     new NPMap3D.Cartesian3(108.94931027330492, 34.24887061792121, 300),
+                     new NPMap3D.Cartesian3(108.94931104821676, 34.24914606029744, 300),
+                     new NPMap3D.Cartesian3(108.9493112292502, 34.24926641109382, 300)
+                 ]
+             ];
+             var camera = new NPMap3D.Camera(helper.map);
+             camera.trackFlight(polyline, {
+                 multiplier: 0.2,
+                 color: '#FF0000',
+                 width: 3,
+                 follow: true,
+                 isLoop: true
+             });
+
          }
      }
      return helper;

@@ -62,7 +62,8 @@ if (v === 'release' || v === 'r') {
                     'Source/Material/StripeMaterialProperty', 'Source/Overlay/Box', 'Source/Overlay/Cylinder', 'Source/Overlay/Ellipse',
                     'Source/Overlay/Ellipsoid', 'Source/Overlay/Label', 'Source/Overlay/LabelCollection', 'Source/Overlay/Marker', 'Source/Overlay/MarkerCollection',
                     'Source/Overlay/Model', 'Source/Overlay/Path', 'Source/Overlay/PointCollection', 'Source/Overlay/Polygon', 'Source/Overlay/Polyline',
-                    'Source/Overlay/Rectangle', 'Source/Overlay/PolylineVolume', 'Source/Overlay/Wall', 'Source/Overlay/AnimationLine', 'Source/lib/CesiumHeatmap'
+                    'Source/Overlay/Rectangle', 'Source/Overlay/PolylineVolume', 'Source/Overlay/Wall', 'Source/Overlay/AnimationLine', 'Source/lib/CesiumHeatmap',
+                    'Source/Camera'
                 ], function() {                    
                     require(['App/script/jquery', 'App/script/3dHelper'], function(jq,helper) {
                         var map = helper.initMap();
