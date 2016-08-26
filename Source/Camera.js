@@ -10,8 +10,7 @@ NPMap3D.Camera = function(map) {
     'use strict';
 
     var camera = map.viewer.camera,
-        clock = map.viewer.clock,
-        //scene = viewer.viewer.scene,
+        clock = map.viewer.clock,         
         multiplier,
         isFollow,
         pointCount,
@@ -46,7 +45,7 @@ NPMap3D.Camera = function(map) {
      */
     this.flyTo = function(target, options) {
         if (!Cesium.defined(target)) {
-            throw new NPMAP3D.DeveloperError('NPMAP3D.Camera', 'flyTo() 参数 target 是必须项!');
+             return;
         }
         if (!Cesium.defined(options)) {
             options = {};
@@ -61,7 +60,7 @@ NPMap3D.Camera = function(map) {
      */
     this.zoomTo = function(target) {
         if (!Cesium.defined(target)) {
-            throw new NPMAP3D.DeveloperError('NPMAP3D.Camera', 'zoomTo() 参数 target 是必须项!');
+            return;
         }
         viewer.viewer.zoomTo(target);
     };
