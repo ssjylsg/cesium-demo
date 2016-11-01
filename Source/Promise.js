@@ -1,8 +1,11 @@
 /**
- * @requires
- * Class: NPMap3D.Promise
- *
  * 轻量级的 javascript Promise 实现
+ * 
+ * @requires
+ * @class: NPMap3D.Promise
+ * @constructor
+ *
+ * 
  */
 NPMap3D.Promise = function() {
     this._callbacks = [];

@@ -139,13 +139,13 @@
     };
     _.prototype.setCenter = function(p, complete, cancel) {
         this.viewer.camera.flyTo({
-            destination: Cesium.Cartesian3.fromDegrees(p.x,p.y,p.z),
-            //duration: 5,
-            // orientation: {
-            //     heading: Cesium.Math.toRadians(0.0),
-            //     pitch: Cesium.Math.toRadians(0.0),
-            //     roll: 0.0
-            // },
+            destination: Cesium.Cartesian3.fromDegrees(p.x, p.y, p.z),
+            orientation: {
+                heading: Cesium.Math.toRadians(6),
+                pitch: Cesium.Math.toRadians(-90),
+                roll: Cesium.Math.toRadians(0)
+            },
+            duration: 6, //动画持续时间
             complete: complete,
             cancel: cancel
         });

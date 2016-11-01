@@ -1,3 +1,8 @@
+/**
+ * 帮助类
+ * @class  NPMap3D.Util
+ * @constructor
+ */
 NPMap3D.Util = {
     isArray: function(value) {
         if (NPMap3D.Util.defined(value)) {
@@ -5,6 +10,10 @@ NPMap3D.Util = {
         }
         return false;
     },
+    /**
+     * 获取host
+     * @return {string} 
+     */
     getHost: function() {
         function c(scriptName) {
             var r = new RegExp("(^|(.*?\\/))(" + scriptName + ")(\\?|$)"),
@@ -28,6 +37,11 @@ NPMap3D.Util = {
     rad: function(x) {
         return x * Math.PI / 180;
     },
+    /**
+     * 面积计算
+     * @param  {object[]} points
+     * @return {number}        
+     */
     getGeodesicArea: function(points) {
         var area = 0.0;
         var len = points.length;
@@ -42,6 +56,11 @@ NPMap3D.Util = {
         area *= Math.pow((39.37 / 39370), 2);
         return Math.abs(area);
     },
+    /**
+     * 
+     * @param  {object} e
+     * @return {bool}  
+     */
     defined: function(e) {
         return void 0 !== e && null !== e;
     },

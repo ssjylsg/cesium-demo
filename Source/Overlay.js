@@ -1,11 +1,14 @@
 (function() {
 
+    /**
+     * 
+     * @param {[type]} options [description]
+     * @param {[type]} extend  [description]
+     * @param {[type]} type    [description]
+     */
     NPMap3D.Overlay = function(options, extend, type) {
         this._events = {},
             options = options || {},
-            // options.position = options.position || [0, 0, 0],
-            // a = Number(options.position[0]),
-            // c = Number(options.position[1]),
             this._entity = new Cesium.Entity({
                 id: NPMap3D.generateUUID(),
                 name: options.name,
@@ -108,36 +111,36 @@
             },
             center: {
                 get: function() {
-                        var e;
-                        switch (type) {
-                            case 'label':
-                            case 'billboard':
-                            case 'box':
-                            case 'cylinder':
-                            case 'ellipse':
-                            case 'ellipsoid':
-                                e = this._entity.position.getValue();
-                                break;
-                            case "polyline":
-                            case "wall":
-                            case "polylineVolume":
-                                e = this._entity[type].positions.getValue()[0]
-                                break;
-                            case "polygon":
-                                e = this._entity[type].hierarchy.getValue()[0]
-                                break;
-                            case "rectangle":
-                                e = this._entity[type].coordinates.getValue();
-                                var l = Cesium.Rectangle.center(e);
-                                return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
-                                break;
-                        }
-
-                        if (e) {
-                            var l = Cesium.Cartographic.fromCartesian(e);
+                    var e;
+                    switch (type) {
+                        case 'label':
+                        case 'billboard':
+                        case 'box':
+                        case 'cylinder':
+                        case 'ellipse':
+                        case 'ellipsoid':
+                            e = this._entity.position.getValue();
+                            break;
+                        case "polyline":
+                        case "wall":
+                        case "polylineVolume":
+                            e = this._entity[type].positions.getValue()[0]
+                            break;
+                        case "polygon":
+                            e = this._entity[type].hierarchy.getValue()[0]
+                            break;
+                        case "rectangle":
+                            e = this._entity[type].coordinates.getValue();
+                            var l = Cesium.Rectangle.center(e);
                             return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
-                        }
-                    }                   
+                            break;
+                    }
+
+                    if (e) {
+                        var l = Cesium.Cartographic.fromCartesian(e);
+                        return NPMap3D.Util.T.getPoint(new NPMap3D.Cartesian3(Cesium.Math.toDegrees(l.longitude), Cesium.Math.toDegrees(l.latitude), l.height));
+                    }
+                }
             }
         });
 

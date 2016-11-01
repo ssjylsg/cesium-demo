@@ -818,6 +818,31 @@
                  isLoop: true
              });
 
+         },
+         createTileSet: function() {
+             var viewer = viewer.viewer;
+             var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+                 url: 'http://192.168.61.28:8001/project/3d-tiles-samples/tilesets/TilesetWithDiscreteLOD/'
+             }));
+
+             tileset.readyPromise.then(function(tileset) {
+                 viewer.camera.viewBoundingSphere(tileset.boundingSphere, new Cesium.HeadingPitchRange(0, -0.5, 0));
+                 viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+             });
+             return tileset;
+         },
+         createCustomerTile: function() {
+
+             var googleyx = new Cesium.UrlTemplateImageryProvider({
+                 url: 'tile/{z}/{x}/{y}.jpg',
+                 maximumLevel: 16,
+                 minimumLevel: 0,
+                 ready: true,
+                 tilingScheme: new Cesium.WebMercatorTilingScheme,
+                 flipXY: true
+             });
+             map.viewer.imageryLayers.removeAll();
+             map.viewer.imageryLayers.addImageryProvider(googleyx);
          }
      }
      return helper;

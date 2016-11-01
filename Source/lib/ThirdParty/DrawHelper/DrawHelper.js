@@ -2076,7 +2076,7 @@ var DrawHelper = (function() {
                         semiMajorAxis: options.radius
                     });
                     break;
-                case "Extent":         
+                case "Extent":
                     p = new NPMap3D.Overlay.Rectangle({
                         position: ([NPMap3D.Util.T.getPoint({
                             x: Cesium.Math.toDegrees(options.west),
@@ -2244,6 +2244,7 @@ var DrawHelper = (function() {
                         outline: true,
                         outlineColor: Cesium.Color.RED,
                         outlineWidth: 20,
+                        height: 0,
                         material: Cesium.Color.fromCssColorString('rgba(248,247,169,0.5)')
                     }
                 });
